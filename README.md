@@ -2,22 +2,25 @@
 
 **Test fixture. Not for use.**
 
-Exercises [dependabot-agent](https://github.com/michaelpipkin/dependabot-agent)'s **override removal** — the case where an override is no longer needed because upstream has moved on, so the agent ages it out.
+Exercises [dependabot-agent](https://github.com/michaelpipkin/dependabot-agent)'s handling of an override for a package that was **never the subject of a Dependabot alert** — a hand-added pin the agent must leave untouched.
 
 ## The setup
 
 - `debug@2.6.9` is installed. It declares `ms@2.0.0`.
-- An override forces `ms` to `>=2.1.0 <3` (as if it were once load-bearing). It resolves to `ms@2.1.3`.
-- **`debug@latest` declares `ms ^2.1.3`** — above the override floor. Upstream moved on.
+- An override forces `ms` to `>=2.1.0 <3`. It resolves to `ms@2.1.3`.
+- There are no vulnerabilities and no `ms` alert on this repo — the `ms` override is a hand-written pin, not something the agent authored from an alert.
 
-There are no vulnerabilities and no Dependabot alerts here; the `ms` override is an **orphan** (no open alert). The agent's orphan-reconciliation path queries the npm registry, sees that `debug@latest` now requests a safe `ms` range, and removes the override:
+## What the agent does (0.1.13+)
+
+Since 0.1.13 the agent only reconciles overrides for packages that were **alerted at some point** (it fetches all alert states to tell a resolved alert from a never-existent one). `ms` was never alerted here, so the agent leaves the override alone — honoring the guarantee that overrides not tied to any alert are never removed automatically:
 
 ```
-✂️  Override for ms (>=2.1.0 <3) is no longer needed — latest upstream versions all request safe ranges: ^2.1.3
-   - REMOVE ms: ">=2.1.0 <3"
+📡 Fetching Dependabot alerts from GitHub...
+   Found 0 open npm Dependabot alert(s) (0 across all states).
+✅ No override changes needed.
 ```
 
-Crucially it reads `debug@latest`'s range, not the installed `debug@2.6.9`'s (`2.0.0`) — the forward-looking check the removal logic is built on.
+> **History:** before 0.1.13 the agent *did* remove this override (reading `debug@latest`'s safe `ms` range and judging the pin redundant). That was the bug this repo now guards against — removing a pin the agent never authored. The removal decision itself is proven by the unit tests in the main repo; a genuine live removal requires a package with real alert history whose dependents have since moved on, which a constructed fixture can't fabricate.
 
 ## Run it
 
@@ -26,4 +29,4 @@ npm install
 dependabot-agent --repo michaelpipkin/dependabot-agent-fixture-removal --dry-run
 ```
 
-(The `--repo` is only used to fetch alerts — there are none — so any repo works; the removal decision is registry-driven, not alert-driven.)
+(The repo needs Dependabot alerts *enabled* so the fetch returns an empty list rather than a 403; it does.)
