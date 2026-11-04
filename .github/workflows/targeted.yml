@@ -1,0 +1,23 @@
+name: targeted
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  targeted:
+    uses: michaelpipkin/dependabot-agent/.github/workflows/targeted-reconcile.yml@main
+    with:
+      base-branch: main
+      agent-version: https://raw.githubusercontent.com/michaelpipkin/dependabot-agent-fixture-removal/b0c55b60903531b2edda735c15c1caf261917717/.t9/dependabot-agent.tgz
+      dry-run: ${{ inputs.dry-run }}
+    secrets:
+      alerts-token: ${{ secrets.ALERTS_TOKEN }}
+      pr-token: ${{ secrets.PR_TOKEN }}
