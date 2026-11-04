@@ -16,7 +16,7 @@ jobs:
     uses: michaelpipkin/dependabot-agent/.github/workflows/targeted-reconcile.yml@targeted-github-app
     with:
       base-branch: main
-      agent-version: https://raw.githubusercontent.com/michaelpipkin/dependabot-agent-fixture-removal/5a20f29049a172c8eb7d3e3d3c4b24cf63f96851/.t9/dependabot-agent.tgz
+      agent-version: https://raw.githubusercontent.com/michaelpipkin/dependabot-agent-fixture-removal/fe9e668b2e653a8c101d73ad1e16b7de957ed952/.t9/dependabot-agent.tgz
       app-client-id: ${{ vars.APP_CLIENT_ID }}
       dry-run: ${{ inputs.dry-run == true }}
     secrets:
