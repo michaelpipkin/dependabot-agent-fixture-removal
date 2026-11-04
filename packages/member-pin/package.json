@@ -1,0 +1,8 @@
+{
+  "name": "member-pin",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "path-parse": "1.0.6"
+  }
+}
