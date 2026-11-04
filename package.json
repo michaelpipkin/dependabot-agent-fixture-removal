@@ -2,17 +2,10 @@
   "name": "dependabot-agent-fixture-removal",
   "version": "0.0.0",
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
   "dependencies": {
-    "debug": "2.6.9",
-    "execa": "^1.0.0",
-    "minimist": "^1.2.6"
+    "debug": "2.6.9"
   },
   "overrides": {
-    "cross-spawn@>=6.0.0 <6.0.6": "6.0.6",
-    "ms": ">=2.1.0 <3",
-    "semver@>=5.0.0 <5.7.2": "5.7.2"
+    "ms": ">=2.1.0 <3"
   }
 }
