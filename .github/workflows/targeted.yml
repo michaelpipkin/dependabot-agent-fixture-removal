@@ -17,7 +17,7 @@ jobs:
     with:
       base-branch: main
       agent-version: https://raw.githubusercontent.com/michaelpipkin/dependabot-agent-fixture-removal/5a20f29049a172c8eb7d3e3d3c4b24cf63f96851/.t9/dependabot-agent.tgz
-      app-client-id: ${{ vars.APP_CLIENT_ID }}
       dry-run: ${{ inputs.dry-run == true }}
     secrets:
-      app-private-key: ${{ secrets.APP_PRIVATE_KEY }}
+      alerts-token: ${{ secrets.ALERTS_TOKEN }}
+      pr-token: ${{ secrets.PR_TOKEN }}
