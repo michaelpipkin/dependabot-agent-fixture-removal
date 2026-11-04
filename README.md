@@ -4,7 +4,7 @@
 
 Exercises [dependabot-agent](https://github.com/michaelpipkin/dependabot-agent)'s handling of an override for a package that was **never the subject of a Dependabot alert** — a hand-added pin the agent must leave untouched.
 
-> This repo was reshaped in November 2026 to prove the `targeted` strategy live, then restored. Its 46 fixed alerts come from that test. None of them is about `ms`, so the behaviour below still holds.
+> This repo was reshaped in November 2026 to prove the `targeted` strategy live, then restored. Its 45 fixed alerts come from that test. None of them is about `ms`, so the behaviour below still holds.
 
 ## The setup
 
@@ -18,7 +18,7 @@ Since 0.1.13 the agent only reconciles overrides for packages that were **alerte
 
 ```
 📡 Fetching Dependabot alerts from GitHub...
-   Found 0 open npm Dependabot alert(s) (46 across all states).
+   Found 0 open npm Dependabot alert(s) (45 across all states).
 ✅ No override changes needed.
 ```
 
